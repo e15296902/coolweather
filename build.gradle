@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.0 rc1"
 
     defaultConfig {
-        applicationId "com.example.coolweather"
+        applicationId "com.example.h.coolweather"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
