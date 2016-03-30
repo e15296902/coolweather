@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.h.coolweather.R;
+import com.example.h.coolweather.service.AutoUpdateService;
 import com.example.h.coolweather.util.HttpUtil;
 import com.example.h.coolweather.util.Utility;
 
@@ -64,9 +65,6 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
     public void onClick(View v){
         switch (v.getId()){
             case R.id.switch_city:
-                SharedPreferences.Editor editor = getSharedPreferences("weatherinfo",MODE_PRIVATE).edit();
-                editor.clear();
-                editor.commit();
                 Intent intent = new Intent(this, ChooseAreaActivity.class);
                 intent.putExtra("from_weather_activity", true);
                 startActivity(intent);
@@ -152,6 +150,8 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
             textTemperature.setText(temp2 + "~" + temp1);
             titleText.setText(cityName);
             relativeLayout.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(this, AutoUpdateService.class);
+            startService(intent);
         }
     }
 

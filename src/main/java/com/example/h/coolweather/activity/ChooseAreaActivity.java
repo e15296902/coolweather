@@ -49,15 +49,15 @@ public class ChooseAreaActivity extends Activity{
     private City selectedCity;
     private County selectedCounty;
     private int currentLevel;
-
+    private Boolean flag;
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         SharedPreferences prefs = getSharedPreferences("weatherinfo", MODE_PRIVATE);
-        if(prefs.getBoolean("city_selected",false)){
+        flag = getIntent().getBooleanExtra("from_weather_activity",false);
+        if(prefs.getBoolean("city_selected",false) && !flag){
             Intent intent = new Intent(this,WeatherActivity.class);
             startActivity(intent);
             finish();
-            return;
         }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
@@ -82,7 +82,6 @@ public class ChooseAreaActivity extends Activity{
                     intent.putExtra("location",selectedCounty.getCountyCode());
                     startActivity(intent);
                     finish();
-                    return;
                 }
             }
         });
@@ -208,6 +207,10 @@ public class ChooseAreaActivity extends Activity{
         }else if(currentLevel == LEVEL_CITY){
             queryProvinces();
         }else {
+            if(flag){
+                Intent intent = new Intent(this, WeatherActivity.class);
+                startActivity(intent);
+            }
             finish();
         }
     }
