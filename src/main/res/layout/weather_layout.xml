@@ -8,6 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#484E61">
+        <Button
+            android:id="@+id/switch_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:text="后退"
+            />
 
         <TextView
             android:id="@+id/title_text"
@@ -15,7 +24,16 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="#fff"
-            android:textSize="24sp"
+            android:textSize="18sp"
+            />
+        <Button
+            android:id="@+id/refresh_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:text="更新"
             />
 
     </RelativeLayout>
@@ -32,6 +50,7 @@
             android:textSize="18sp"
             />
         <RelativeLayout
+            android:id="@+id/weather_info_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

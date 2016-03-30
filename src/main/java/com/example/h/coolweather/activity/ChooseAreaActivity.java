@@ -2,6 +2,8 @@ package com.example.h.coolweather.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -45,10 +47,18 @@ public class ChooseAreaActivity extends Activity{
     private List<County> countyList;
     private Province selectedProvince;
     private City selectedCity;
+    private County selectedCounty;
     private int currentLevel;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        SharedPreferences prefs = getSharedPreferences("weatherinfo", MODE_PRIVATE);
+        if(prefs.getBoolean("city_selected",false)){
+            Intent intent = new Intent(this,WeatherActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
         titleText = (TextView) findViewById(R.id.title_text);
@@ -65,6 +75,14 @@ public class ChooseAreaActivity extends Activity{
                 }else if(currentLevel == LEVEL_CITY){
                     selectedCity = cityList.get(position);
                     queryCounties();
+
+                }else{
+                    Intent intent = new Intent(ChooseAreaActivity.this,WeatherActivity.class);
+                    selectedCounty = countyList.get(position);
+                    intent.putExtra("location",selectedCounty.getCountyCode());
+                    startActivity(intent);
+                    finish();
+                    return;
                 }
             }
         });
@@ -129,7 +147,7 @@ public class ChooseAreaActivity extends Activity{
         }
         showProgressDialog();
         Log.d("Db","This data from Server");
-        HttpUtil.startConnection(address,new MainActivity.HttpCallBackListener(){
+        HttpUtil.startConnection(address,new WeatherActivity.HttpCallBackListener(){
             @Override
             public void onFinish(String data) {
                 boolean result = false;
@@ -193,4 +211,5 @@ public class ChooseAreaActivity extends Activity{
             finish();
         }
     }
+
 }
